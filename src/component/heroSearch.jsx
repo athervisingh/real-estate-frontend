@@ -32,7 +32,7 @@ export default function ThemedRealEstateSearch() {
     console.log(searchParams);
     dispatch(setLoading(true));
     try {
-      const response = await axios.post('http://localhost:5000/api/search/result', searchParams);
+      const response = await axios.post('/api/search/result', searchParams);
       dispatch(setSearchResults(response.data));
       console.log(response.data);
     } catch (error) {

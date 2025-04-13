@@ -48,7 +48,7 @@ const AdminPanel = () => {
       }
 
       try {
-        const res = await axios.get('http://localhost:5000/api/admin/dashboard', {
+        const res = await axios.get('/api/admin/dashboard', {
           headers: {
             'x-auth-token': token
           }
@@ -123,7 +123,7 @@ const AdminPanel = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/update-property",
+        "/api/admin/update-property",
         formData,
         {
           headers: {
@@ -173,7 +173,7 @@ const AdminPanel = () => {
       console.log("📤 Sending form data to backend:", [...formData.entries()]);
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/add-property",
+        "/api/admin/add-property",
         formData,
         {
           headers: {
@@ -221,7 +221,7 @@ const AdminPanel = () => {
 
     try {
       console.log({ city, description, image }); // Log the data being sent to backend
-      await axios.post("http://localhost:5000/api/admin/update-city", formData);
+      await axios.post("/api/admin/update-city", formData);
       alert("✅ City updated successfully!");
       setCity("Abu Dhabi");
       setDescription("");
@@ -240,7 +240,7 @@ const AdminPanel = () => {
     setFetching(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/admin/fetch-city-data?city=${viewCity}`
+        `/api/admin/fetch-city-data?city=${viewCity}`
       );
       setCityData(res.data);
     } catch (err) {
@@ -254,7 +254,7 @@ const AdminPanel = () => {
     setFetching(true);
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/admin/fetch-nested-area-data`
+        `/api/admin/fetch-nested-area-data`
       );
       setAreaData(res.data.data); // setting only the `data` part
     } catch (err) {
@@ -268,7 +268,7 @@ const AdminPanel = () => {
     if (!window.confirm("Are you sure you want to delete this entry?")) return;
 
     try {
-      await axios.delete("http://localhost:5000/api/admin/delete-city", {
+      await axios.delete("/api/admin/delete-city", {
         data: {
           docId: id,
           collectionName: viewCity,
@@ -286,7 +286,7 @@ const AdminPanel = () => {
   const handleAreaDelete = async (propertyId, areaName) => {
     try {
       const response = await axios.delete(
-        "http://localhost:5000/api/admin/delete-property",
+        "/api/admin/delete-property",
         {
           data: {
             _id: propertyId,
@@ -334,10 +334,10 @@ const AdminPanel = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/admin/edit-city", formData);
+      await axios.post("/api/admin/edit-city", formData);
       alert("✅ City updated successfully!");
       const updatedData = await axios.get(
-        `http://localhost:5000/api/admin/fetch-city-data?city=${viewCity}`
+        `/api/admin/fetch-city-data?city=${viewCity}`
       );
       setCityData(updatedData.data);
       setEditId(null);
@@ -368,13 +368,13 @@ const AdminPanel = () => {
     formData.append("image", newImage);
 
     try {
-      await axios.post("http://localhost:5000/api/admin/addnewEntry", formData);
+      await axios.post("/api/admin/addnewEntry", formData);
       alert("✅ Area added successfully!");
       fetchCityData();
       setShowAddModal(false);
 
       const updatedData = await axios.get(
-        `http://localhost:5000/api/admin/fetch-city-data?city=${viewCity}`
+        `/api/admin/fetch-city-data?city=${viewCity}`
       );
       setCityData(updatedData.data);
     } catch (err) {

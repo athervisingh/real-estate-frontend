@@ -15,7 +15,7 @@ const PrivateRoute = ({ children }) => {
       }
 
       try {
-        await axios.get('http://localhost:5000/api/admin/dashboard', {
+        await axios.get('/api/admin/dashboard', {
           headers: {
             'x-auth-token': token,
           },

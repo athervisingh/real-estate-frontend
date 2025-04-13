@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@keyframes slideX {
+  0%, 19.99% {
+    transform: translateX(0%);
+  }
+  20%, 39.99% {
+    transform: translateX(-100%);
+  }
+  40%, 59.99% {
+    transform: translateX(-200%);
+  }
+  60%, 79.99% {
+    transform: translateX(-300%);
+  }
+  80%, 100% {
+    transform: translateX(-400%);
+  }
+}
+
+.animate-slideX {
+  animation: slideX 50s infinite;
+}

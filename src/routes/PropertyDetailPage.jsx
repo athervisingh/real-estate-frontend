@@ -33,7 +33,7 @@ const PropertyDetailPage = () => {
           const formattedArea = areaName;
 
           const res = await axios.get(
-            `http://localhost:3002/api/admin/properties/${formattedArea}`
+            `/api/admin/properties/${formattedArea}`
           );
 
           // Find the property that matches the slug

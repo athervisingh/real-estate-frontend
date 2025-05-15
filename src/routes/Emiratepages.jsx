@@ -43,7 +43,7 @@ const Emiratepages = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3002/api/admin/fetch-city-data?city=${properCityName}`
+          `/api/admin/fetch-city-data?city=${properCityName}`
         );
         setData(res.data);
       } catch (err) {

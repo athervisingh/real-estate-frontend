@@ -3,12 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SobhaPage = () => {
-  const cityName = "dubai";
+  // const cityName = "dubai";
   const areaName = "sobha";
-  const formattedCityName = cityName
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
+  // const formattedCityName = cityName
+  //   .split("-")
+  //   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //   .join("");
   const formattedArea = areaName.replace(/-/g, "_");
 
   const [properties, setProperties] = useState([]);
@@ -35,7 +35,7 @@ const SobhaPage = () => {
     const fetchProperties = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3002/api/admin/properties/${formattedArea}`
+          `/api/admin/properties/${formattedArea}`
         );
         setProperties(res.data);
       } catch (err) {
@@ -47,21 +47,21 @@ const SobhaPage = () => {
     fetchProperties();
   }, [formattedArea]);
 
-  useEffect(() => {
-    const fetchAreaDetails = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3002/api/admin/properties/${formattedCityName}/${formattedArea}`
-        );
-        setArea(res.data);
-      } catch (err) {
-        console.error("Error fetching properties:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAreaDetails();
-  }, [formattedCityName, formattedArea]);
+  // useEffect(() => {
+  //   const fetchAreaDetails = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `/api/admin/properties/${formattedCityName}/${formattedArea}`
+  //       );
+  //       setArea(res.data);
+  //     } catch (err) {
+  //       console.error("Error fetching properties:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchAreaDetails();
+  // }, [formattedCityName, formattedArea]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -192,12 +192,12 @@ const SobhaPage = () => {
                     <h3 className="text-lg font-bold text-[#0e2f4e]">
                       {property.house_name}
                     </h3>
-                    <span className="bg-[#f8bd0f] text-[#0e2f4e] px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-gray-100 text-[#0e2f4e] px-3 py-1 rounded-full text-sm font-medium">
                       {property.house_type}
                     </span>
-                    {/* <p className="text-sm text-gray-600 line-clamp-2">
+                    <p className="text-sm text-gray-600 line-clamp-2">
                       {property.discription}
-                    </p> */}
+                    </p>
                     <div className="flex justify-between items-center pt-2 border-t border-gray-100">
                       <span className="text-lg font-bold text-[#0e2f4e]">
                         Location — {property.location?.toLocaleString()}

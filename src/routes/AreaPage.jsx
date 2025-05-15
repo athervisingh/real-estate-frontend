@@ -19,7 +19,7 @@ const AreaPage = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const res = await axios.get(`http://localhost:3002/api/admin/properties/${formattedArea}`);
+        const res = await axios.get(`/api/admin/properties/${formattedArea}`);
         setProperties(res.data);
       } catch (err) {
         console.error("Error fetching properties:", err);
@@ -36,7 +36,7 @@ const AreaPage = () => {
       try {
         console.log(formattedCityName+formattedArea)
         // Make API request using both cityName and areaName
-        const res = await axios.get(`http://localhost:3002/api/admin/properties/${formattedCityName}/${formattedArea}`);
+        const res = await axios.get(`/api/admin/properties/${formattedCityName}/${formattedArea}`);
         setArea(res.data);
         console.log(res.data);
       } catch (err) {
@@ -181,12 +181,12 @@ const AreaPage = () => {
                     <h3 className="text-lg font-bold text-[#0e2f4e]">
                       {property.house_name}
                     </h3>
-                    <span className="bg-[#f8bd0f] text-[#0e2f4e] px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="bg-gray-100 text-[#0e2f4e] px-3 py-1 rounded-full text-sm font-medium">
                       {property.house_type}
                     </span>
-                    {/* <p className="text-sm text-gray-600 line-clamp-2">
+                    <p className="text-sm text-gray-600 line-clamp-2">
                       {property.discription}
-                    </p> */}
+                    </p>
                     <div className="flex justify-between items-center pt-2 border-t border-gray-100">
                       <span className="text-lg font-bold text-[#0e2f4e]">
                         Location — {property.location?.toLocaleString()}

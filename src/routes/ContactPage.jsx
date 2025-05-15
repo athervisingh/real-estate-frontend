@@ -399,7 +399,7 @@ const ContactPage = () => {
       <div className="relative bg-blue-900 text-white py-16">
         <div className="absolute inset-0 opacity-20">
           {/* <img 
-            src="http://localhost:3002/api/placeholder/1920/600" 
+            src="/api/placeholder/1920/600" 
             alt="Real Estate Background" 
             className="w-full h-full object-cover"
           /> */}

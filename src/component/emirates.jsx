@@ -11,7 +11,7 @@ export default function Emirates() {
     const fetchCities = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:3002/api/homepage/cities`);
+        const res = await fetch(`/api/homepage/cities`);
         if (!res.ok) {
           throw new Error(`Failed to fetch: ${res.status}`);
         }

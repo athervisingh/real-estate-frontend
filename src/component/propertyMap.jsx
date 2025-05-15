@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import L from 'leaflet';
-// These imports are CRITICAL - you must import Leaflet CSS!
-import 'leaflet/dist/leaflet.css';
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const PropertyMap = ({ property }) => {
   const mapRef = useRef(null);
@@ -11,15 +10,12 @@ const PropertyMap = ({ property }) => {
   const [mapError, setMapError] = useState(false);
 
   useEffect(() => {
-    // Make sure Leaflet is defined and mapRef exists
     if (!L || !mapRef.current || !property) return;
 
-    // Make sure the height is set (crucial)
     if (mapRef.current) {
-      mapRef.current.style.height = '400px';
+      mapRef.current.style.height = "400px";
     }
 
-    // Clean up existing map instance if it exists
     if (mapInstanceRef.current) {
       mapInstanceRef.current.remove();
       mapInstanceRef.current = null;
@@ -29,22 +25,21 @@ const PropertyMap = ({ property }) => {
       try {
         setMapLoaded(false);
         setMapError(false);
-        
-        // Use only property.location for geocoding
+
         const locationString = property.location;
-        
-        // First try to geocode using Nominatim
-        let lat = 25.2048;  // Default Dubai coordinates
+        let lat = 25.2048;
         let lon = 55.2708;
-        
+
         try {
-          const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationString)}`;
+          const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+            locationString
+          )}`;
           const response = await axios.get(geocodeUrl, {
             headers: {
-              'User-Agent': 'PropertyWebsite/1.0',
-            }
+              "User-Agent": "PropertyWebsite/1.0",
+            },
           });
-          
+
           if (response.data && response.data.length > 0) {
             lat = parseFloat(response.data[0].lat);
             lon = parseFloat(response.data[0].lon);
@@ -54,46 +49,57 @@ const PropertyMap = ({ property }) => {
           }
         } catch (geocodeError) {
           console.error("Geocoding error:", geocodeError);
-          // Continue with default coordinates
         }
-        
-        // Create the map instance
+
         const map = L.map(mapRef.current, {
           center: [lat, lon],
           zoom: 15,
-          preferCanvas: true
+          preferCanvas: true,
         });
-        
-        // Store the map instance for cleanup
+
         mapInstanceRef.current = map;
-        
-        // Add tile layer - IMPORTANT: This must load properly
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          maxZoom: 19
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          maxZoom: 19,
         }).addTo(map);
-        
-        // Add marker
-        const marker = L.marker([lat, lon]).addTo(map);
-        marker.bindPopup(`<b>${property.house_name}</b><br>${property.house_type || ''} ${property.for ? '• ' + property.for : ''}`).openPopup();
-        
-        // Trigger a map resize after a short delay to ensure proper rendering
+
+        // Custom SVG Marker using Lucide MapPin
+        const markerIcon = L.divIcon({
+          html: `
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" stroke="#0e2f4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin">
+              <path d="M20 10c0 3.87-8 13-8 13s-8-9.13-8-13a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          `,
+          className: "",
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+        });
+
+        const marker = L.marker([lat, lon], { icon: markerIcon }).addTo(map);
+        marker
+          .bindPopup(
+            `<b>${property.house_name}</b><br>${property.house_type || ""} ${
+              property.for ? "• " + property.for : ""
+            }`
+          )
+          .openPopup();
+
         setTimeout(() => {
           map.invalidateSize();
           setMapLoaded(true);
         }, 300);
-        
       } catch (err) {
         console.error("Map loading error:", err);
         setMapError(true);
-        setMapLoaded(true); // To hide loading indicator
+        setMapLoaded(true);
       }
     };
-    
-    // Allow DOM to update before loading map
+
     setTimeout(loadMap, 100);
-    
-    // Cleanup function
+
     return () => {
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
@@ -101,16 +107,15 @@ const PropertyMap = ({ property }) => {
       }
     };
   }, [property]);
-  
+
   return (
     <div className="map-container relative">
-      <div 
-        ref={mapRef} 
+      <div
+        ref={mapRef}
         className="h-96 w-full rounded-lg"
-        style={{ height: '400px', background: "#f0f0f0" }}
+        style={{ height: "400px", background: "#f0f0f0" }}
       ></div>
-      
-      {/* Loading overlay */}
+
       {!mapLoaded && !mapError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-70 rounded-lg z-10">
           <div className="text-center">
@@ -119,8 +124,7 @@ const PropertyMap = ({ property }) => {
           </div>
         </div>
       )}
-      
-      {/* Error overlay */}
+
       {mapError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-70 rounded-lg z-10">
           <div className="text-center p-4">
@@ -139,7 +143,9 @@ const PropertyMap = ({ property }) => {
               />
             </svg>
             <p className="text-gray-700 font-medium">Unable to load map</p>
-            <p className="text-gray-500 text-sm mt-1">Please check your connection or try again later</p>
+            <p className="text-gray-500 text-sm mt-1">
+              Please check your connection or try again later
+            </p>
           </div>
         </div>
       )}

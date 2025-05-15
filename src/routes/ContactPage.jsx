@@ -398,11 +398,11 @@ const ContactPage = () => {
       {/* Footer CTA */}
       <div className="relative bg-blue-900 text-white py-16">
         <div className="absolute inset-0 opacity-20">
-          <img 
-            src="/api/placeholder/1920/600" 
+          {/* <img 
+            src="http://localhost:3002/api/placeholder/1920/600" 
             alt="Real Estate Background" 
             className="w-full h-full object-cover"
-          />
+          /> */}
         </div>
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">Ready to Find Your Dream Property?</h2>

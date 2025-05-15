@@ -37,34 +37,32 @@ const AdminPanel = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredAreaData, setFilteredAreaData] = useState(areaData);
 
-
   useEffect(() => {
     const fetchDashboard = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
 
       if (!token) {
-       console.log("no token");
-       return;
+        console.log("no token");
+        return;
       }
 
       try {
-        const res = await axios.get('/api/admin/dashboard', {
-          headers: {
-            'x-auth-token': token
+        const res = await axios.get(
+          "http://localhost:3002/api/admin/dashboard",
+          {
+            headers: {
+              "x-auth-token": token,
+            },
           }
-        });
+        );
         console.log(res.data);
       } catch (err) {
         console.error(err);
-          }
+      }
     };
 
     fetchDashboard();
   }, []);
-
-
-
-
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -123,7 +121,7 @@ const AdminPanel = () => {
       }
 
       const response = await axios.post(
-        "/api/admin/update-property",
+        "http://localhost:3002/api/admin/update-property",
         formData,
         {
           headers: {
@@ -173,7 +171,7 @@ const AdminPanel = () => {
       console.log("📤 Sending form data to backend:", [...formData.entries()]);
 
       const response = await axios.post(
-        "/api/admin/add-property",
+        "http://localhost:3002/api/admin/add-property",
         formData,
         {
           headers: {
@@ -221,7 +219,7 @@ const AdminPanel = () => {
 
     try {
       console.log({ city, description, image }); // Log the data being sent to backend
-      await axios.post("/api/admin/update-city", formData);
+      await axios.post("http://localhost:3002/api/admin/update-city", formData);
       alert("✅ City updated successfully!");
       setCity("Abu Dhabi");
       setDescription("");
@@ -240,7 +238,7 @@ const AdminPanel = () => {
     setFetching(true);
     try {
       const res = await axios.get(
-        `/api/admin/fetch-city-data?city=${viewCity}`
+        `http://localhost:3002/api/admin/fetch-city-data?city=${viewCity}`
       );
       setCityData(res.data);
     } catch (err) {
@@ -254,7 +252,7 @@ const AdminPanel = () => {
     setFetching(true);
     try {
       const res = await axios.get(
-        `/api/admin/fetch-nested-area-data`
+        `http://localhost:3002/api/admin/fetch-nested-area-data`
       );
       setAreaData(res.data.data); // setting only the `data` part
     } catch (err) {
@@ -268,7 +266,7 @@ const AdminPanel = () => {
     if (!window.confirm("Are you sure you want to delete this entry?")) return;
 
     try {
-      await axios.delete("/api/admin/delete-city", {
+      await axios.delete("http://localhost:3002/api/admin/delete-city", {
         data: {
           docId: id,
           collectionName: viewCity,
@@ -286,7 +284,7 @@ const AdminPanel = () => {
   const handleAreaDelete = async (propertyId, areaName) => {
     try {
       const response = await axios.delete(
-        "/api/admin/delete-property",
+        "http://localhost:3002/api/admin/delete-property",
         {
           data: {
             _id: propertyId,
@@ -334,10 +332,10 @@ const AdminPanel = () => {
     }
 
     try {
-      await axios.post("/api/admin/edit-city", formData);
+      await axios.post("http://localhost:3002/api/admin/edit-city", formData);
       alert("✅ City updated successfully!");
       const updatedData = await axios.get(
-        `/api/admin/fetch-city-data?city=${viewCity}`
+        `http://localhost:3002/api/admin/fetch-city-data?city=${viewCity}`
       );
       setCityData(updatedData.data);
       setEditId(null);
@@ -368,13 +366,13 @@ const AdminPanel = () => {
     formData.append("image", newImage);
 
     try {
-      await axios.post("/api/admin/addnewEntry", formData);
+      await axios.post("http://localhost:3002/api/admin/addnewEntry", formData);
       alert("✅ Area added successfully!");
       fetchCityData();
       setShowAddModal(false);
 
       const updatedData = await axios.get(
-        `/api/admin/fetch-city-data?city=${viewCity}`
+        `http://localhost:3002/api/admin/fetch-city-data?city=${viewCity}`
       );
       setCityData(updatedData.data);
     } catch (err) {
@@ -430,6 +428,8 @@ const AdminPanel = () => {
               <option>Umm Al Quwain</option>
               <option>Ras Al Khaimah</option>
               <option>Fujairah</option>
+              <option>International Projects</option>
+              <option>Penthouses and Luxury Villas</option>
             </select>
           </div>
 
@@ -500,16 +500,18 @@ const AdminPanel = () => {
               <option>UmmAlQuwain</option>
               <option>RasAlKhaimah</option>
               <option>Fujairah</option>
+              <option>InternationalProjects</option>
+              <option>PenthousesAndLuxuryVillas</option>
             </select>
           </div>
 
           <button
-    onClick={() => handleAddNewEntry()}
-    className="mt-6 md:mt-0 inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 h-10 rounded-lg"
-  >
-    <PlusCircle size={18} className="mr-2 md:mr-2" />
-    <span className="hidden md:inline">Add New Entry</span>
-  </button>
+            onClick={() => handleAddNewEntry()}
+            className="mt-6 md:mt-0 inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 h-10 rounded-lg"
+          >
+            <PlusCircle size={18} className="mr-2 md:mr-2" />
+            <span className="hidden md:inline">Add New Entry</span>
+          </button>
           {showAddModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#00000080]">
               <div className="bg-white w-full max-w-md p-6 rounded-xl shadow-xl relative">
@@ -702,14 +704,11 @@ const AdminPanel = () => {
           </table>
         </div>
       </div>
-      <hr className="mt-20"/>
+      <hr className="mt-20" />
       <div className="p-4 space-y-6 mt-20">
         {/* Search Bar */}
-        <h2 className="text-xl font-semibold text-gray-700 mb-2">
-           Search
-          </h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-2">Search</h2>
         <div className="relative mb-6 w-[20vw]">
-       
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <Search size={20} className="text-gray-500" />
           </div>
@@ -732,12 +731,12 @@ const AdminPanel = () => {
                     {areaName.replace(/_/g, " ")}
                   </h2>
                   <button
-    onClick={() => handleAreaAdd(areaName)}
-    className="mt-6 md:mt-0 inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 h-10 rounded-lg mb-5"
-  >
-    <PlusCircle size={18} className="mr-2 md:mr-2" />
-    <span className="hidden md:inline">Add New Entry</span>
-  </button>
+                    onClick={() => handleAreaAdd(areaName)}
+                    className="mt-6 md:mt-0 inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 h-10 rounded-lg mb-5"
+                  >
+                    <PlusCircle size={18} className="mr-2 md:mr-2" />
+                    <span className="hidden md:inline">Add New Entry</span>
+                  </button>
                 </div>
                 <div className="flex overflow-x-auto space-x-6 scrollbar-hide">
                   {properties.map((property, idx) => (
@@ -770,7 +769,7 @@ const AdminPanel = () => {
                         className="w-full h-40 object-cover rounded-t-2xl"
                       />
                       <div className="p-4 space-y-1">
-                        <h3 className="font-semibold text-lg text-gray-800">
+                        <h3 className="font-semibold text-lg text-gray-800 w-[20vw] h-[10vh] overflow-hidden">
                           {property.house_name}
                         </h3>
                         <p className="text-sm text-gray-600">
@@ -779,9 +778,25 @@ const AdminPanel = () => {
                         <p className="text-sm text-indigo-500 italic">
                           {property.for}
                         </p>
-                        <p className="text-sm mt-1 text-gray-700">
+                        <p className="text-sm mt-1 text-gray-700 w-[20vw] h-[10vh] overflow-hidden">
                           {property.discription}
                         </p>
+                       <div className="flex justify-between">
+                       <p className="text-sm text-indigo-500 italic">
+                          Bedrooms : {property.bedrooms}
+                        </p>
+                        <p className="text-sm text-indigo-500 italic">
+                         Bathrooms : {property.bathrooms}
+                        </p>
+                       </div>
+                       <div className="flex justify-between">
+                       <p className="text-sm text-indigo-500 italic">
+                         Location : {property.location}
+                        </p>
+                        <p className="text-sm text-indigo-500 italic">
+                         Parking : {property.parking}
+                        </p>
+                       </div>
                         <p className="text-base font-bold text-green-700 mt-2">
                           AED {property.price.toLocaleString()}
                         </p>
@@ -802,11 +817,10 @@ const AdminPanel = () => {
       </div>
       {editModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg space-y-4">
+          <div className="bg-white p-6 rounded-xl w-[90%] max-w-lg space-y-4 max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold text-gray-800 mb-2">
               Property Detail Form
             </h2>
-
             <input
               name="house_name"
               value={editProperty.house_name}
@@ -829,6 +843,34 @@ const AdminPanel = () => {
               placeholder="For (Buy/Rent)"
             />
             <input
+              name="bedrooms"
+              value={editProperty.bedrooms}
+              onChange={handleEditChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Bedrooms"
+            />
+            <input
+              name="bathrooms"
+              value={editProperty.bathrooms}
+              onChange={handleEditChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Bathrooms"
+            />
+            <input
+              name="parking"
+              value={editProperty.parking}
+              onChange={handleEditChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Parking"
+            />
+            <input
+              name="location"
+              value={editProperty.location}
+              onChange={handleEditChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Location"
+            />
+            <input
               type="file"
               accept="image/*"
               onChange={(e) => {
@@ -842,12 +884,11 @@ const AdminPanel = () => {
               }}
               className="w-full p-2 border rounded-md"
             />
-
             <textarea
               name="discription"
               value={editProperty.discription}
               onChange={handleEditChange}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border rounded-md h-24"
               placeholder="Description"
             />
             <input
@@ -858,7 +899,6 @@ const AdminPanel = () => {
               className="w-full p-2 border rounded-md"
               placeholder="Price"
             />
-
             <div className="flex justify-end gap-3 pt-2">
               <button
                 onClick={() => setEditModalOpen(false)}

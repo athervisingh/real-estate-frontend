@@ -60,7 +60,7 @@ const Navbar = () => {
           <a href="/about" className="text-gray-700 hover:text-[#f8bd0f] text-sm lg:text-base font-medium transition-colors duration-300">
             About Us
           </a>
-          <a href="/find-my-agent" className="text-gray-700 hover:text-[#f8bd0f] text-sm lg:text-base font-medium transition-colors duration-300">
+          {/* <a href="/find-my-agent" className="text-gray-700 hover:text-[#f8bd0f] text-sm lg:text-base font-medium transition-colors duration-300">
             Find my Agent
           </a>
           <a href="/floor-plans" className="text-gray-700 hover:text-[#f8bd0f] text-sm lg:text-base font-medium transition-colors duration-300">
@@ -68,7 +68,7 @@ const Navbar = () => {
           </a>
           <a href="/agent-portal" className="text-gray-700 hover:text-[#f8bd0f] text-sm lg:text-base font-medium transition-colors duration-300">
             Agent Portal
-          </a>
+          </a> */}
           <a href="/contact" className="text-white bg-[#f8bd0f] hover:bg-[#e5ad0e] px-4 py-2 rounded-md text-sm lg:text-base font-medium transition-colors duration-300">
             Contact Us
           </a>
@@ -105,7 +105,7 @@ const Navbar = () => {
           >
             About Us
           </a>
-          <a 
+          {/* <a 
             href="/find-my-agent" 
             className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#f8bd0f] transition-colors duration-300"
             onClick={() => setIsOpen(false)}
@@ -125,7 +125,7 @@ const Navbar = () => {
             onClick={() => setIsOpen(false)}
           >
             Agent Portal
-          </a>
+          </a> */}
           <a 
             href="/contact" 
             className="block px-4 py-2 mt-2 text-center bg-[#f8bd0f] text-white hover:bg-[#e5ad0e] transition-colors duration-300"

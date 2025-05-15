@@ -11,7 +11,7 @@ export default function Emirates() {
     const fetchCities = async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/homepage/cities");
+        const res = await fetch(`http://localhost:3002/api/homepage/cities`);
         if (!res.ok) {
           throw new Error(`Failed to fetch: ${res.status}`);
         }
@@ -92,7 +92,7 @@ export default function Emirates() {
             </div>
             
             <div className="p-6">
-              <h2 className="text-2xl font-bold text-[#0e2f4e] mb-3 group-hover:text-blue-600 transition-colors duration-300">{city.name}</h2>
+              <h2 className="text-2xl font-bold text-[#0e2f4e] mb-3 group-hover:text-blue-600 transition-colors duration-300">{city.name.replaceAll("-"," ")}</h2>
               <p className="text-gray-600 line-clamp-3">{city.text}</p>
             </div>
             

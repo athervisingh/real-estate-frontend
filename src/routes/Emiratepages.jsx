@@ -6,23 +6,44 @@ const Emiratepages = () => {
   const { cityName } = useParams();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [randomImage, setRandomImage] = useState("");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const properCityName = cityName
     .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join("");
 
+  const CityName = cityName
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+
+  // Define images array for carousel
+  const images = [
+    "/L1.jpg",
+    "/L2.jpg",
+    "/L3.jpg",
+    "/L4.jpg",
+    "/L5.jpg",
+    "/L6.jpg",
+    "/L7.jpg",
+    "/L8.jpg",
+  ];
+
+  // Image carousel controls - automatic rotation
   useEffect(() => {
-    const randomNumber = Math.floor(Math.random() * 5) + 1;
-    setRandomImage(`images/L${randomNumber}.jpg`);
-  }, [])
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [images.length]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `/api/admin/fetch-city-data?city=${properCityName}`
+          `http://localhost:3002/api/admin/fetch-city-data?city=${properCityName}`
         );
         setData(res.data);
       } catch (err) {
@@ -31,7 +52,6 @@ const Emiratepages = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [properCityName]);
 
@@ -45,15 +65,44 @@ const Emiratepages = () => {
     );
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <div
-        className="w-full h-[60vh] sm:h-[70vh] bg-cover bg-center relative shadow-lg"
-        style={{ backgroundImage: `url(${randomImage})` }}
-      >
-        <div className="absolute inset-0 bg-[#0f304e]/40 flex items-center justify-center">
+    <div className="min-h-screen bg-white mt-20">
+      {/* Hero Section with Carousel */}
+      <div className="relative w-full overflow-hidden h-[100vh]">
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={`/images${img}`}
+              alt={`${CityName} image ${index + 1}`}
+              className="w-full h-full object-center"
+              onError={(e) => {
+                console.error(`Failed to load image: ${img}`);
+                e.target.src = "/placeholder-property.jpg";
+              }}
+            />
+          </div>
+        ))}
+
+        {/* Indicators */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              className={`w-3 h-3 rounded-full ${
+                index === currentImageIndex ? "bg-white" : "bg-white/50"
+              }`}
+              onClick={() => setCurrentImageIndex(index)}
+            />
+          ))}
+        </div>
+
+        <div className="absolute inset-0 flex items-center justify-center text-center text-white px-4 bg-gradient-to-b from-transparent via-black/20 to-black/40">
           <h1 className="text-5xl text-white font-bold drop-shadow-lg">
-            {properCityName}
+            {CityName}
           </h1>
         </div>
       </div>
@@ -64,10 +113,12 @@ const Emiratepages = () => {
           Discover <span className="text-[#f8bd0f]">{properCityName}</span>
         </h2>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-          Explore the handpicked highlights, scenic spots, and hidden gems of{" "}
-          <span className="text-[#0f304e] font-medium">{properCityName}</span>. Each
-          location is carefully curated to offer a rich glimpse into the vibrant
-          culture, nature, and architecture of the emirate.
+          Discover a lifestyle defined by elegance, comfort, and sophistication
+          in{" "}
+          <span className="text-[#0f304e] font-medium">{properCityName}</span>.
+          From stylish residences to serene surroundings, each property offers a
+          perfect blend of modern living and timeless charm in one of the
+          region’s most desirable destinations.
         </p>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

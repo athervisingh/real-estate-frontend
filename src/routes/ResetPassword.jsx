@@ -16,7 +16,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      await axios.post(`/api/admin/reset-password/${token}`, { password });
+      await axios.post(`http://localhost:3002/api/admin/reset-password/${token}`, { password });
       alert('Password reset successful!');
       navigate('/login');
     } catch (err) {

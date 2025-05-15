@@ -26,8 +26,8 @@ export default function Footer() {
   
   // Freelancer information
   const freelancerInfo = {
-    name: "Athervi Singh",
-    portfolio: "https://vsportfolio-fawn.vercel.app/"
+    name: "empire key properties",
+    portfolio: "https://www.linkedin.com/in/deepak-shaw-8923ab35b/"
   };
 
   
@@ -45,7 +45,7 @@ export default function Footer() {
                 <p className="text-sm text-gray-400">Founder: {ownerInfo.name}</p>
               </div>
             </div>
-            <p className="text-sm text-gray-400 w-[20vw] mb-4">Your trusted real estate partner with over a year of experience. Connecting clients to the right properties at the right price, no matter the budget.</p>
+            <p className="text-sm text-gray-400 mb-4">Your trusted real estate partner with over a year of experience. Connecting clients to the right properties at the right price, no matter the budget.</p>
       
           </div>
           

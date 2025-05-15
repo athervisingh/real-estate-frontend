@@ -14,7 +14,7 @@ import Login from "./routes/Login.jsx";
 import ResetPassword from "./routes/ResetPassword.jsx";
 import ForgotPassword from './routes/ForgetPassword.jsx';
 import PrivateRoute from "./component/privateRoute.jsx";
-
+import SobhaPage from "./routes/SobhaPage.jsx";
 function App() {
   return (
     <>
@@ -28,6 +28,7 @@ function App() {
           <PrivateRoute>
             <AdminPanel /><Footer/>
           </PrivateRoute></>} />
+        <Route path="/dubai/sobha" element={<><SobhaPage /><Footer /></>} />
         <Route path="/:cityName" element={<><Emiratepages /><Footer/></>} />
         <Route path="/:cityName/:areaName" element={<><AreaPage /><Footer/></>} />
         <Route path="/property/:propertySlug" element={<><PropertyDetailPage /><Footer/></>} />

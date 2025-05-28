@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import RealEstateServices from "../component/realEstateServices";
 import ContactForm from "../component/contactForm";
 import Footer from "../component/footer";
+import Card360 from "../component/card360";
 
 const HomePage = () => {
   const results = useSelector((state) => state.search.results);
@@ -50,6 +51,7 @@ const HomePage = () => {
     <div className="mt-20">
       <RealEstateHero />
       <Emirates />
+      <Card360 />
       <RealEstateServices/>
       {/* Only render SearchResults if there are results */}
       {results && results.length > 0 && (

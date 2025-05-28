@@ -12,7 +12,7 @@ const SobhaPage = () => {
   const formattedArea = areaName.replace(/-/g, "_");
 
   const [properties, setProperties] = useState([]);
-  const [area, setArea] = useState([]);
+  // const [area, setArea] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);

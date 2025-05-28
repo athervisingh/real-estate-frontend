@@ -15,6 +15,7 @@ import ResetPassword from "./routes/ResetPassword.jsx";
 import ForgotPassword from './routes/ForgetPassword.jsx';
 import PrivateRoute from "./component/privateRoute.jsx";
 import SobhaPage from "./routes/SobhaPage.jsx";
+import Page3DSpace from "./routes/Page3DSpace.jsx";
 function App() {
   return (
     <>
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/3dspace" element={<><Page3DSpace /><Footer /></>} />
       </Routes>
     </>
   );

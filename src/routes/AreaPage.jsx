@@ -19,6 +19,7 @@ const AreaPage = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
+        
         const res = await axios.get(`/api/admin/properties/${formattedArea}`);
         setProperties(res.data);
       } catch (err) {
@@ -35,7 +36,7 @@ const AreaPage = () => {
     const fetchAreaDetails = async () => {
       try {
         console.log(formattedCityName+formattedArea)
-        // Make API request using both cityName and areaName
+      
         const res = await axios.get(`/api/admin/properties/${formattedCityName}/${formattedArea}`);
         setArea(res.data);
         console.log(res.data);

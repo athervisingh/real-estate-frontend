@@ -19,7 +19,7 @@ function ForgotPassword() {
 
     setLoading(true);
     try {
-      await axios.post('/api/admin/forgot-password', { email });
+      await axios.post(`/api/admin/forgot-password`, { email });
       alert('Check your email for the reset link');
     } catch (err) {
       console.error(err);

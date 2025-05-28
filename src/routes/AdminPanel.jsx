@@ -48,7 +48,7 @@ const AdminPanel = () => {
 
       try {
         const res = await axios.get(
-          "/api/admin/dashboard",
+          `/api/admin/dashboard`,
           {
             headers: {
               "x-auth-token": token,
@@ -121,7 +121,7 @@ const AdminPanel = () => {
       }
 
       const response = await axios.post(
-        "/api/admin/update-property",
+        `/api/admin/update-property`,
         formData,
         {
           headers: {
@@ -171,7 +171,7 @@ const AdminPanel = () => {
       console.log("📤 Sending form data to backend:", [...formData.entries()]);
 
       const response = await axios.post(
-        "/api/admin/add-property",
+        `/api/admin/add-property`,
         formData,
         {
           headers: {
@@ -219,7 +219,7 @@ const AdminPanel = () => {
 
     try {
       console.log({ city, description, image }); // Log the data being sent to backend
-      await axios.post("/api/admin/update-city", formData);
+      await axios.post(`/api/admin/update-city`, formData);
       alert("✅ City updated successfully!");
       setCity("Abu Dhabi");
       setDescription("");
@@ -266,7 +266,7 @@ const AdminPanel = () => {
     if (!window.confirm("Are you sure you want to delete this entry?")) return;
 
     try {
-      await axios.delete("/api/admin/delete-city", {
+      await axios.delete(`/api/admin/delete-city`, {
         data: {
           docId: id,
           collectionName: viewCity,
@@ -284,7 +284,7 @@ const AdminPanel = () => {
   const handleAreaDelete = async (propertyId, areaName) => {
     try {
       const response = await axios.delete(
-        "/api/admin/delete-property",
+        `/api/admin/delete-property`,
         {
           data: {
             _id: propertyId,
@@ -332,7 +332,7 @@ const AdminPanel = () => {
     }
 
     try {
-      await axios.post("/api/admin/edit-city", formData);
+      await axios.post(`/api/admin/edit-city`, formData);
       alert("✅ City updated successfully!");
       const updatedData = await axios.get(
         `/api/admin/fetch-city-data?city=${viewCity}`
@@ -366,7 +366,7 @@ const AdminPanel = () => {
     formData.append("image", newImage);
 
     try {
-      await axios.post("/api/admin/addnewEntry", formData);
+      await axios.post(`/api/admin/addnewEntry`, formData);
       alert("✅ Area added successfully!");
       fetchCityData();
       setShowAddModal(false);

@@ -16,7 +16,7 @@ function Login() {
 
     setLoading(true);
     try {
-      const res = await axios.post('/api/admin/login', { username: username.trim(),
+      const res = await axios.post(`/api/admin/login`, { username: username.trim(),
         password: password.trim()});
       localStorage.setItem('token', res.data.token);
       navigate('/admin/dashboard');
